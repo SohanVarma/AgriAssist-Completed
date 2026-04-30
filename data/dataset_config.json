@@ -1,0 +1,7 @@
+{
+  "dataset_name": "New Plant Diseases Dataset",
+  "source": "Kaggle",
+  "dataset_slug": "vipoooool/new-plant-diseases-dataset",
+  "local_dir": "data/real_crop_dataset",
+  "note": "Run src/06_download_real_dataset.py before training on real data."
+}

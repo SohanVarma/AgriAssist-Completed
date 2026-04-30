@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Large/generated datasets
+data/sample_crop_dataset/
+data/sample_crop_dataset_synthetic/
+data/real_crop_dataset/
+
+# Large model checkpoints
+*.pt
+*.pth
