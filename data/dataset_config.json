@@ -1,35 +1,45 @@
 {
   "project": "AgriAssist",
+  "active_image_dataset": "New Plant Diseases Dataset",
   "dataset_sources": [
     {
       "name": "PlantVillage",
       "type": "crop disease image dataset",
-      "description": "Approximately 54k crop leaf images across 38 disease classes. Used for crop disease image classification training.",
+      "description": "Crop leaf image dataset across multiple crops and disease classes. Useful as an alternative image-classification dataset.",
+      "source": "Hugging Face",
       "url": "https://huggingface.co/datasets/mohanty/PlantVillage",
-      "local_dir": "data/plantvillage"
+      "hf_dataset_id": "mohanty/PlantVillage",
+      "local_dir": "data/plantvillage",
+      "enabled": true
     },
     {
-      "name": "iNaturalist field observations",
-      "type": "real-world field observation image source",
-      "description": "Field observation images useful for testing robustness on real-world, noisy agricultural images.",
-      "url": "https://www.inaturalist.org/observations",
-      "local_dir": "data/inaturalist_observations"
+      "name": "New Plant Diseases Dataset",
+      "type": "crop disease image dataset",
+      "description": "Kaggle dataset used as the primary downloadable training source for the CNN crop disease classification pipeline.",
+      "source": "Kaggle",
+      "url": "https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset",
+      "dataset_slug": "vipoooool/new-plant-diseases-dataset",
+      "local_dir": "data/real_crop_dataset",
+      "enabled": true
     },
     {
       "name": "ICAR crop management bulletins",
       "type": "agricultural text knowledge source",
       "description": "Crop management publications used for advisory generation and RAG-based recommendation support.",
+      "source": "Website",
       "url": "https://icar.org.in/content/publications",
-      "local_dir": "data/icar_bulletins"
+      "local_dir": "data/icar_bulletins",
+      "enabled": false
     },
     {
-      "name": "New Plant Diseases Dataset",
-      "type": "crop disease image dataset",
-      "description": "Kaggle dataset used as a practical downloadable training source for the current CNN pipeline.",
-      "source": "Kaggle",
-      "dataset_slug": "vipoooool/new-plant-diseases-dataset",
-      "local_dir": "data/real_crop_dataset"
+      "name": "iNaturalist field observations",
+      "type": "real-world field observation image source",
+      "description": "Field observation images useful for testing robustness on real-world, noisy agricultural images.",
+      "source": "Website",
+      "url": "https://www.inaturalist.org/observations",
+      "local_dir": "data/inaturalist_observations",
+      "enabled": false
     }
   ],
-  "note": "Large datasets are not committed to GitHub. Download or place them locally under the listed local_dir paths before training."
+  "note": "Large datasets are not committed to GitHub. The downloader reads these dataset links/config entries and stores files locally under local_dir before training."
 }
