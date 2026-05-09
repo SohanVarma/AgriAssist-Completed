@@ -3,7 +3,6 @@ import pandas as pd
 import torch
 from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
-import seaborn as sns
 from PIL import Image
 from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
@@ -57,7 +56,7 @@ def main():
     checkpoint = torch.load(MODEL_PATH, map_location='cpu')
 
     label_to_idx = checkpoint['label_to_idx']
-    idx_to_label = {v: k for k, v in label_to_idx.items()}
+    labels = list(label_to_idx.keys())
 
     model = SmallCNN(len(label_to_idx))
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -78,25 +77,30 @@ def main():
     report = classification_report(
         y_true,
         y_pred,
-        target_names=list(label_to_idx.keys())
+        target_names=labels
     )
 
     cm = confusion_matrix(y_true, y_pred)
 
     (RESULTS_DIR / 'classification_report.txt').write_text(report)
 
-    plt.figure(figsize=(6, 5))
-    sns.heatmap(
-        cm,
-        annot=True,
-        fmt='d',
-        xticklabels=list(label_to_idx.keys()),
-        yticklabels=list(label_to_idx.keys())
-    )
+    fig, ax = plt.subplots(figsize=(6, 5))
+    ax.imshow(cm)
 
-    plt.xlabel('Predicted')
-    plt.ylabel('Actual')
-    plt.title('Confusion Matrix')
+    ax.set_xticks(range(len(labels)))
+    ax.set_yticks(range(len(labels)))
+
+    ax.set_xticklabels(labels, rotation=15)
+    ax.set_yticklabels(labels)
+
+    for i in range(len(labels)):
+        for j in range(len(labels)):
+            ax.text(j, i, cm[i, j], ha='center', va='center')
+
+    ax.set_xlabel('Predicted')
+    ax.set_ylabel('Actual')
+    ax.set_title('Confusion Matrix')
+
     plt.tight_layout()
     plt.savefig(RESULTS_DIR / 'confusion_matrix.png')
 
