@@ -4,16 +4,16 @@ Query: leaf_spot crop disease treatment for farmers in India
 
 ## Retrieved Documents
 
-Similarity Score: 0.270
-Leaf blight causes yellowing and drying of leaves. Use disease-free seeds, improve air circulation, avoid excessive watering, and seek expert guidance before chemical treatment.
+Similarity Score: 0.226
+डाळ चें पीक रोग कारणान खराब जाला। माती तपासून कांय ना लाय। Pulses Disease Konkani Nagaland Monsoon High Hopeful Govt_Expert nan 0 Yes 7 ask_advice 15/01/2024 13:10
 
-Similarity Score: 0.231
-The crop appears healthy. Continue balanced irrigation, nutrient management, proper sunlight exposure, and regular monitoring for early disease detection.
+Similarity Score: 0.225
+माझ्या टोमॅटो ला रोग ने नुकसान केले आहे. काही नाही वापरा. Tomato Disease Marathi Chhattisgarh Rabi Medium Neutral NGO nan 0 No 8 ask_advice 07/01/2024 13:15
 
 ## Generated Advisory
-Leaf blight causes yellowing and drying of leaves. Use disease-free seeds, improve air circulation, avoid excessive watering, and seek expert guidance before chemical treatment.
+डाळ चें पीक रोग कारणान खराब जाला। माती तपासून कांय ना लाय। Pulses Disease Konkani Nagaland Monsoon High Hopeful Govt_Expert nan 0 Yes 7 ask_advice 15/01/2024 13:10
 
-The crop appears healthy. Continue balanced irrigation, nutrient management, proper sunlight exposure, and regular monitoring for early disease detection.
+माझ्या टोमॅटो ला रोग ने नुकसान केले आहे. काही नाही वापरा. Tomato Disease Marathi Chhattisgarh Rabi Medium Neutral NGO nan 0 No 8 ask_advice 07/01/2024 13:15
 
 ## Safety Note
 AI-generated agricultural recommendations should be verified with local agricultural experts.

@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 RESULTS_DIR = Path('results')
 RESULTS_DIR.mkdir(exist_ok=True)
 
-KB_PATH = Path('data/advisory_knowledge_base.json')
+KB_PATH = Path('data/advisory_knowledge_base_large.json')
 
 
 class AgriculturalRAG:
