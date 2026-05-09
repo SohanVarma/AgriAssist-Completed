@@ -2,18 +2,34 @@
   {
     "id": "leaf_spot_001",
     "disease": "leaf_spot",
-    "crop": "general",
+    "crop": "tomato",
     "region": "India",
     "language": "english",
-    "content": "Leaf spot commonly appears as brown or black circular spots on leaves. It spreads faster in humid weather and crowded planting conditions. Farmers should remove highly infected leaves, avoid overhead irrigation, improve spacing, and consult a local agriculture officer before chemical treatment."
+    "content": "Leaf spot appears as brown or black circular spots on leaves. Remove infected leaves, avoid overhead irrigation, improve spacing between plants, and consult agricultural experts before applying fungicides."
+  },
+  {
+    "id": "leaf_spot_002",
+    "disease": "leaf_spot",
+    "crop": "potato",
+    "region": "India",
+    "language": "english",
+    "content": "Leaf spot spreads faster in humid environments. Maintain field hygiene, remove fallen infected leaves, and monitor nearby crops regularly."
   },
   {
     "id": "leaf_blight_001",
     "disease": "leaf_blight",
-    "crop": "general",
+    "crop": "tomato",
     "region": "India",
     "language": "english",
-    "content": "Leaf blight causes yellowing, browning, and drying of leaf areas. It can reduce crop yield if not managed early. Farmers should remove affected plant material, avoid excess moisture, use disease-free seeds, and seek expert guidance before applying fungicide."
+    "content": "Leaf blight causes yellowing and drying of leaves. Use disease-free seeds, improve air circulation, avoid excessive watering, and seek expert guidance before chemical treatment."
+  },
+  {
+    "id": "leaf_blight_002",
+    "disease": "leaf_blight",
+    "crop": "potato",
+    "region": "India",
+    "language": "english",
+    "content": "Leaf blight management includes early detection, pruning infected leaves, crop rotation, and using resistant crop varieties when available."
   },
   {
     "id": "healthy_leaf_001",
@@ -21,22 +37,30 @@
     "crop": "general",
     "region": "India",
     "language": "english",
-    "content": "The leaf appears healthy. Farmers should continue regular monitoring, balanced irrigation, proper sunlight exposure, and nutrient management. Early observation helps prevent disease spread."
+    "content": "The crop appears healthy. Continue balanced irrigation, nutrient management, proper sunlight exposure, and regular monitoring for early disease detection."
   },
   {
-    "id": "leaf_spot_002",
-    "disease": "leaf_spot",
+    "id": "healthy_leaf_002",
+    "disease": "healthy_leaf",
     "crop": "general",
     "region": "India",
     "language": "english",
-    "content": "For leaf spot prevention, maintain field hygiene, remove fallen infected leaves, rotate crops where possible, and avoid watering leaves directly. Use chemical treatment only after local expert recommendation."
+    "content": "Healthy crops should be monitored weekly for pest infestation, nutrient deficiency, and environmental stress conditions."
   },
   {
-    "id": "leaf_blight_002",
-    "disease": "leaf_blight",
+    "id": "fungal_alert_001",
+    "disease": "fungal_infection",
     "crop": "general",
     "region": "India",
     "language": "english",
-    "content": "Leaf blight management includes early detection, pruning infected areas, improving airflow, and using resistant crop varieties when available. Severe cases should be checked by an agricultural extension officer."
+    "content": "Fungal infections often increase during rainy seasons. Ensure proper airflow, avoid water accumulation, and remove infected plant material immediately."
+  },
+  {
+    "id": "pest_control_001",
+    "disease": "pest_damage",
+    "crop": "general",
+    "region": "India",
+    "language": "english",
+    "content": "Pest damage can reduce crop productivity significantly. Monitor leaves regularly, use integrated pest management practices, and avoid overuse of pesticides."
   }
 ]
