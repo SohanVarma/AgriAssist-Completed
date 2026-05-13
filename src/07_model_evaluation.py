@@ -7,17 +7,21 @@ from PIL import Image
 from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
 
-RESULTS_DIR = Path('results')
-MODEL_PATH = RESULTS_DIR / 'initial_model.pt'
-VAL_CSV = RESULTS_DIR / 'val_metadata.csv'
+RESULTS_DIR = Path("results")
+MODEL_PATH = RESULTS_DIR / "initial_model.pt"
+VAL_CSV = RESULTS_DIR / "val_metadata.csv"
+
+IMAGE_SIZE = 128
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 class CropDataset(Dataset):
     def __init__(self, csv_path, label_to_idx):
         self.df = pd.read_csv(csv_path)
         self.label_to_idx = label_to_idx
+
         self.transform = transforms.Compose([
-            transforms.Resize((64, 64)),
+            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
             transforms.ToTensor()
         ])
 
@@ -26,40 +30,62 @@ class CropDataset(Dataset):
 
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
-        image = Image.open(row['image_path']).convert('RGB')
+
+        image = Image.open(row["image_path"]).convert("RGB")
         image = self.transform(image)
-        label = self.label_to_idx[row['label']]
+
+        label = self.label_to_idx[row["label"]]
+
         return image, label
 
 
-class SmallCNN(torch.nn.Module):
+class ImprovedCNN(torch.nn.Module):
     def __init__(self, num_classes):
         super().__init__()
-        self.net = torch.nn.Sequential(
-            torch.nn.Conv2d(3, 16, 3, padding=1),
+
+        self.features = torch.nn.Sequential(
+            torch.nn.Conv2d(3, 32, 3, padding=1),
+            torch.nn.BatchNorm2d(32),
             torch.nn.ReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.Conv2d(16, 32, 3, padding=1),
+
+            torch.nn.Conv2d(32, 64, 3, padding=1),
+            torch.nn.BatchNorm2d(64),
             torch.nn.ReLU(),
             torch.nn.MaxPool2d(2),
+
+            torch.nn.Conv2d(64, 128, 3, padding=1),
+            torch.nn.BatchNorm2d(128),
+            torch.nn.ReLU(),
+            torch.nn.MaxPool2d(2),
+
+            torch.nn.Conv2d(128, 256, 3, padding=1),
+            torch.nn.BatchNorm2d(256),
+            torch.nn.ReLU(),
+            torch.nn.MaxPool2d(2)
+        )
+
+        self.classifier = torch.nn.Sequential(
             torch.nn.Flatten(),
-            torch.nn.Linear(32 * 16 * 16, 64),
+            torch.nn.Linear(256 * 8 * 8, 256),
             torch.nn.ReLU(),
-            torch.nn.Linear(64, num_classes)
+            torch.nn.Dropout(0.4),
+            torch.nn.Linear(256, num_classes)
         )
 
     def forward(self, x):
-        return self.net(x)
+        x = self.features(x)
+        return self.classifier(x)
 
 
 def main():
-    checkpoint = torch.load(MODEL_PATH, map_location='cpu')
+    checkpoint = torch.load(MODEL_PATH, map_location=DEVICE)
 
-    label_to_idx = checkpoint['label_to_idx']
+    label_to_idx = checkpoint["label_to_idx"]
     labels = list(label_to_idx.keys())
 
-    model = SmallCNN(len(label_to_idx))
-    model.load_state_dict(checkpoint['model_state_dict'])
+    model = ImprovedCNN(len(label_to_idx)).to(DEVICE)
+    model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
 
     dataset = CropDataset(VAL_CSV, label_to_idx)
@@ -70,9 +96,13 @@ def main():
 
     with torch.no_grad():
         for x, y in loader:
+            x = x.to(DEVICE)
+            y = y.to(DEVICE)
+
             preds = model(x).argmax(dim=1)
-            y_true.extend(y.tolist())
-            y_pred.extend(preds.tolist())
+
+            y_true.extend(y.cpu().tolist())
+            y_pred.extend(preds.cpu().tolist())
 
     report = classification_report(
         y_true,
@@ -82,7 +112,7 @@ def main():
 
     cm = confusion_matrix(y_true, y_pred)
 
-    (RESULTS_DIR / 'classification_report.txt').write_text(report)
+    (RESULTS_DIR / "classification_report.txt").write_text(report)
 
     fig, ax = plt.subplots(figsize=(6, 5))
     ax.imshow(cm)
@@ -95,17 +125,18 @@ def main():
 
     for i in range(len(labels)):
         for j in range(len(labels)):
-            ax.text(j, i, cm[i, j], ha='center', va='center')
+            ax.text(j, i, cm[i, j], ha="center", va="center")
 
-    ax.set_xlabel('Predicted')
-    ax.set_ylabel('Actual')
-    ax.set_title('Confusion Matrix')
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+    ax.set_title("Confusion Matrix")
 
     plt.tight_layout()
-    plt.savefig(RESULTS_DIR / 'confusion_matrix.png')
+    plt.savefig(RESULTS_DIR / "confusion_matrix.png")
 
     print(report)
+    print("Saved classification report and confusion matrix.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
