@@ -11,3 +11,4 @@ data/real_crop_dataset/
 # Large model checkpoints
 *.pt
 *.pth
+data/PlantVillage/
