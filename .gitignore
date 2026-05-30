@@ -12,3 +12,16 @@ data/real_crop_dataset/
 *.pt
 *.pth
 data/PlantVillage/
+.env
+.env
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+results/
+models/
+*.pt
+*.pth
+*.tar.gz
+data/rag_documents/
+data/processed_rag/
