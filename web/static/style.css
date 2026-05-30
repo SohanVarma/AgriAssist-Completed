@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f0;
+    color: #1f2d1f;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+header {
+    text-align: center;
+    padding: 30px;
+    background: #2f6f3e;
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #b6c7b0;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px 22px;
+    background: #2f6f3e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+pre {
+    background: #eef3ea;
+    padding: 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+}
+
+details {
+    margin-bottom: 12px;
+    background: #f7faf5;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.doc {
+    margin-top: 10px;
+    padding: 12px;
+    background: white;
+    border-left: 4px solid #2f6f3e;
+}
+
+.advisory {
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.warning {
+    background: #fff3cd;
+    border-left: 6px solid #d39e00;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.prediction {
+    border-left: 6px solid #2f6f3e;
+}
+
+.error-box {
+    border-left: 6px solid #cc0000;
+}

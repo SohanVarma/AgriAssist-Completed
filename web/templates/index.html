@@ -1,0 +1,104 @@
+k<!DOCTYPE html>
+<html>
+<head>
+    <title>AgriAssist AI Advisory</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌾 AgriAssist</h1>
+            <p>AI-powered agricultural advisory using crop image prediction, RAG, and OpenAI</p>
+        </header>
+
+        <section class="card">
+            <h2>Option 1: Ask by Text</h2>
+
+            <form action="/advisory" method="post">
+                <label>Enter your agricultural query</label>
+                <input
+                    type="text"
+                    name="query"
+                    value="{{ query }}"
+                    placeholder="Example: tomato leaf curl whitefly management"
+                >
+                <button type="submit">Generate Advisory</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Option 2: Upload Crop Image</h2>
+
+            <form action="/predict-image" method="post" enctype="multipart/form-data">
+                <label>Upload a leaf/crop image</label>
+                <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    required
+                >
+                <button type="submit">Predict Disease and Generate Advisory</button>
+            </form>
+        </section>
+
+        {% if error %}
+            <section class="card error-box">
+                <p class="error">{{ error }}</p>
+            </section>
+        {% endif %}
+
+        {% if prediction %}
+            <section class="card prediction">
+                <h2>Image Prediction Result</h2>
+                <p><strong>Uploaded Image:</strong> {{ prediction.image_name }}</p>
+                <p><strong>Predicted Disease/Class:</strong> {{ prediction.label }}</p>
+                <p><strong>Confidence:</strong> {{ "%.2f"|format(prediction.confidence) }}%</p>
+            </section>
+        {% endif %}
+
+        {% if result %}
+            <section class="card">
+                <h2>Query Used for Retrieval</h2>
+                <pre>{{ result.query }}</pre>
+            </section>
+
+            <section class="card">
+                <h2>Retrieved Documents</h2>
+
+                {% for item in result.retrieved_documents %}
+                    <details>
+                        <summary>
+                            Document {{ loop.index }} |
+                            Score: {{ "%.3f"|format(item.score) }} |
+                            Crop: {{ item.document.crop }} |
+                            Problem: {{ item.document.problem_type }}
+                        </summary>
+
+                        <div class="doc">
+                            <p><strong>Crop:</strong> {{ item.document.crop }}</p>
+                            <p><strong>Problem Type:</strong> {{ item.document.problem_type }}</p>
+                            <p><strong>Region:</strong> {{ item.document.region }}</p>
+                            <p><strong>Season:</strong> {{ item.document.season }}</p>
+                            <p><strong>Urgency:</strong> {{ item.document.urgency }}</p>
+                            <p><strong>Recommended Product:</strong> {{ item.document.product_recommended }}</p>
+                            <p>{{ item.document.content }}</p>
+                        </div>
+                    </details>
+                {% endfor %}
+            </section>
+
+            <section class="card">
+                <h2>AI Generated Agricultural Advisory</h2>
+                <div class="advisory">
+                    {{ result.generated_advisory | replace('\n', '<br>') | safe }}
+                </div>
+            </section>
+
+            <section class="warning">
+                <h2>Safety Note</h2>
+                <p>{{ result.safety_note }}</p>
+            </section>
+        {% endif %}
+    </div>
+</body>
+</html>
