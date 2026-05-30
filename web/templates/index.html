@@ -9,6 +9,7 @@
     <nav class="navbar">
         <div class="logo">AgriAssist</div>
         <div class="nav-links">
+            <a href="#capabilities">Capabilities</a>
             <a href="#advisory">Advisory</a>
             <a href="#documents">Evidence</a>
             <a href="#safety">Safety</a>
@@ -27,17 +28,91 @@
         </div>
     </section>
 
-    <main class="container" id="advisory">
+    <main class="container">
+
         <section class="intro">
             <p class="eyebrow dark">AgriAssist Intelligence</p>
-            <h2>Choose how you want to diagnose the farming issue</h2>
+            <h2>Multimodal agricultural intelligence in one system</h2>
             <p>
-                Use text for direct agricultural questions, or upload a crop image to predict
-                the disease/class and generate an AI-assisted advisory.
+                AgriAssist combines crop disease image classification, retrieval-augmented
+                generation, explainable AI, and OpenAI-powered advisory generation to support
+                farmers with safer and more evidence-based recommendations.
             </p>
         </section>
 
-        <section class="input-grid">
+        <section class="features-section" id="capabilities">
+            <p class="eyebrow dark">Project Capabilities</p>
+            <h2>What AgriAssist Includes</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Crop Disease Classification</h3>
+                    <ul>
+                        <li>PyTorch CNN classifier</li>
+                        <li>Image upload prediction</li>
+                        <li>Confidence scoring</li>
+                        <li>Evaluation metrics</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Working RAG Pipeline</h3>
+                    <ul>
+                        <li>Agricultural knowledge base ingestion</li>
+                        <li>TF-IDF vectorization</li>
+                        <li>Cosine similarity retrieval</li>
+                        <li>Top-k advisory retrieval</li>
+                        <li>Grounded advisory generation</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Explainable AI</h3>
+                    <ul>
+                        <li>Grad-CAM heatmap generation</li>
+                        <li>Visual disease region explanation</li>
+                        <li>Model attention visualization</li>
+                        <li>Transparent prediction support</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="workflow-section">
+            <p class="eyebrow dark">System Workflow</p>
+            <h2>How the advisory is generated</h2>
+
+            <div class="workflow-grid">
+                <div class="workflow-step">
+                    <span>01</span>
+                    <h3>User Input</h3>
+                    <p>The user enters a crop problem or uploads a crop image.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <span>02</span>
+                    <h3>Prediction / Retrieval</h3>
+                    <p>The system predicts the image class or retrieves relevant agricultural records.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <span>03</span>
+                    <h3>AI Analysis</h3>
+                    <p>OpenAI analyzes the retrieved evidence and prepares an advisory report.</p>
+                </div>
+
+                <div class="workflow-step">
+                    <span>04</span>
+                    <h3>Safety Guidance</h3>
+                    <p>The final report includes limitations and expert-verification warnings.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="input-grid" id="advisory">
             <div class="panel">
                 <span class="panel-number">01</span>
                 <h3>Ask by Text</h3>
@@ -62,7 +137,7 @@
                 <span class="panel-number">02</span>
                 <h3>Upload Crop Image</h3>
                 <p>
-                    Upload a leaf or crop image. The model predicts the class and
+                    Upload a leaf or crop image. The model predicts the disease/class and
                     AgriAssist uses it to retrieve advisory documents.
                 </p>
 
@@ -89,15 +164,18 @@
             <section class="result-card prediction">
                 <p class="eyebrow dark">Image Prediction</p>
                 <h2>Prediction Result</h2>
+
                 <div class="info-grid">
                     <div>
                         <span>Uploaded Image</span>
                         <strong>{{ prediction.image_name }}</strong>
                     </div>
+
                     <div>
                         <span>Predicted Disease/Class</span>
                         <strong>{{ prediction.label }}</strong>
                     </div>
+
                     <div>
                         <span>Confidence</span>
                         <strong>{{ "%.2f"|format(prediction.confidence) }}%</strong>
