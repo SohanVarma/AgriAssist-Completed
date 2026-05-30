@@ -1,104 +1,166 @@
-k<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>AgriAssist AI Advisory</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>🌾 AgriAssist</h1>
-            <p>AI-powered agricultural advisory using crop image prediction, RAG, and OpenAI</p>
-        </header>
+    <nav class="navbar">
+        <div class="logo">AgriAssist</div>
+        <div class="nav-links">
+            <a href="#advisory">Advisory</a>
+            <a href="#documents">Evidence</a>
+            <a href="#safety">Safety</a>
+        </div>
+    </nav>
 
-        <section class="card">
-            <h2>Option 1: Ask by Text</h2>
+    <section class="hero">
+        <div class="hero-overlay">
+            <p class="eyebrow">AI-powered farmer decision support</p>
+            <h1>Smarter Crop Advisory<br>from Images and Documents</h1>
+            <p class="hero-text">
+                Upload a crop image or ask a farming question. AgriAssist retrieves relevant
+                agricultural knowledge and generates a safety-conscious advisory report.
+            </p>
+            <a href="#advisory" class="hero-button">Get Advisory</a>
+        </div>
+    </section>
 
-            <form action="/advisory" method="post">
-                <label>Enter your agricultural query</label>
-                <input
-                    type="text"
-                    name="query"
-                    value="{{ query }}"
-                    placeholder="Example: tomato leaf curl whitefly management"
-                >
-                <button type="submit">Generate Advisory</button>
-            </form>
+    <main class="container" id="advisory">
+        <section class="intro">
+            <p class="eyebrow dark">AgriAssist Intelligence</p>
+            <h2>Choose how you want to diagnose the farming issue</h2>
+            <p>
+                Use text for direct agricultural questions, or upload a crop image to predict
+                the disease/class and generate an AI-assisted advisory.
+            </p>
         </section>
 
-        <section class="card">
-            <h2>Option 2: Upload Crop Image</h2>
+        <section class="input-grid">
+            <div class="panel">
+                <span class="panel-number">01</span>
+                <h3>Ask by Text</h3>
+                <p>
+                    Enter a crop problem such as tomato leaf curl, wheat rust,
+                    irrigation issue, or brinjal equipment problem.
+                </p>
 
-            <form action="/predict-image" method="post" enctype="multipart/form-data">
-                <label>Upload a leaf/crop image</label>
-                <input
-                    type="file"
-                    name="image"
-                    accept="image/*"
-                    required
-                >
-                <button type="submit">Predict Disease and Generate Advisory</button>
-            </form>
+                <form action="/advisory" method="post">
+                    <label>Enter agricultural query</label>
+                    <input
+                        type="text"
+                        name="query"
+                        value="{{ query }}"
+                        placeholder="Example: tomato leaf curl whitefly management"
+                    >
+                    <button type="submit">Generate Text Advisory</button>
+                </form>
+            </div>
+
+            <div class="panel accent-panel">
+                <span class="panel-number">02</span>
+                <h3>Upload Crop Image</h3>
+                <p>
+                    Upload a leaf or crop image. The model predicts the class and
+                    AgriAssist uses it to retrieve advisory documents.
+                </p>
+
+                <form action="/predict-image" method="post" enctype="multipart/form-data">
+                    <label>Upload crop image</label>
+                    <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        required
+                    >
+                    <button type="submit">Predict and Generate Advisory</button>
+                </form>
+            </div>
         </section>
 
         {% if error %}
-            <section class="card error-box">
-                <p class="error">{{ error }}</p>
+            <section class="message error-box">
+                <strong>Error:</strong> {{ error }}
             </section>
         {% endif %}
 
         {% if prediction %}
-            <section class="card prediction">
-                <h2>Image Prediction Result</h2>
-                <p><strong>Uploaded Image:</strong> {{ prediction.image_name }}</p>
-                <p><strong>Predicted Disease/Class:</strong> {{ prediction.label }}</p>
-                <p><strong>Confidence:</strong> {{ "%.2f"|format(prediction.confidence) }}%</p>
+            <section class="result-card prediction">
+                <p class="eyebrow dark">Image Prediction</p>
+                <h2>Prediction Result</h2>
+                <div class="info-grid">
+                    <div>
+                        <span>Uploaded Image</span>
+                        <strong>{{ prediction.image_name }}</strong>
+                    </div>
+                    <div>
+                        <span>Predicted Disease/Class</span>
+                        <strong>{{ prediction.label }}</strong>
+                    </div>
+                    <div>
+                        <span>Confidence</span>
+                        <strong>{{ "%.2f"|format(prediction.confidence) }}%</strong>
+                    </div>
+                </div>
             </section>
         {% endif %}
 
         {% if result %}
-            <section class="card">
+            <section class="result-card">
+                <p class="eyebrow dark">Retrieval Query</p>
                 <h2>Query Used for Retrieval</h2>
                 <pre>{{ result.query }}</pre>
             </section>
 
-            <section class="card">
-                <h2>Retrieved Documents</h2>
+            <section class="result-card" id="documents">
+                <p class="eyebrow dark">Retrieved Evidence</p>
+                <h2>Top Retrieved Documents</h2>
 
-                {% for item in result.retrieved_documents %}
-                    <details>
-                        <summary>
-                            Document {{ loop.index }} |
-                            Score: {{ "%.3f"|format(item.score) }} |
-                            Crop: {{ item.document.crop }} |
-                            Problem: {{ item.document.problem_type }}
-                        </summary>
+                <div class="documents">
+                    {% for item in result.retrieved_documents %}
+                        <details>
+                            <summary>
+                                <span>Document {{ loop.index }}</span>
+                                <small>
+                                    Score: {{ "%.3f"|format(item.score) }} |
+                                    Crop: {{ item.document.crop }} |
+                                    Problem: {{ item.document.problem_type }}
+                                </small>
+                            </summary>
 
-                        <div class="doc">
-                            <p><strong>Crop:</strong> {{ item.document.crop }}</p>
-                            <p><strong>Problem Type:</strong> {{ item.document.problem_type }}</p>
-                            <p><strong>Region:</strong> {{ item.document.region }}</p>
-                            <p><strong>Season:</strong> {{ item.document.season }}</p>
-                            <p><strong>Urgency:</strong> {{ item.document.urgency }}</p>
-                            <p><strong>Recommended Product:</strong> {{ item.document.product_recommended }}</p>
-                            <p>{{ item.document.content }}</p>
-                        </div>
-                    </details>
-                {% endfor %}
+                            <div class="doc">
+                                <p><strong>Crop:</strong> {{ item.document.crop }}</p>
+                                <p><strong>Problem Type:</strong> {{ item.document.problem_type }}</p>
+                                <p><strong>Region:</strong> {{ item.document.region }}</p>
+                                <p><strong>Season:</strong> {{ item.document.season }}</p>
+                                <p><strong>Urgency:</strong> {{ item.document.urgency }}</p>
+                                <p><strong>Recommended Product:</strong> {{ item.document.product_recommended }}</p>
+                                <p>{{ item.document.content }}</p>
+                            </div>
+                        </details>
+                    {% endfor %}
+                </div>
             </section>
 
-            <section class="card">
+            <section class="result-card advisory-card">
+                <p class="eyebrow dark">AI Analysis</p>
                 <h2>AI Generated Agricultural Advisory</h2>
                 <div class="advisory">
                     {{ result.generated_advisory | replace('\n', '<br>') | safe }}
                 </div>
             </section>
 
-            <section class="warning">
+            <section class="safety" id="safety">
+                <p class="eyebrow dark">Safety First</p>
                 <h2>Safety Note</h2>
                 <p>{{ result.safety_note }}</p>
             </section>
         {% endif %}
-    </div>
+    </main>
+
+    <footer>
+        <p>AgriAssist • AI-assisted agricultural decision support</p>
+    </footer>
 </body>
 </html>
