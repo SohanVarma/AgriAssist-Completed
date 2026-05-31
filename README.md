@@ -10,7 +10,7 @@ Run the website locally using FastAPI:
 
 ```text
 http://127.0.0.1:8000
-Paste **everything below** inside `nano README.md`.
+
 
 ````markdown
 # AgriAssist
@@ -26,14 +26,6 @@ Run the website locally using FastAPI:
 ```text
 http://127.0.0.1:8000
 ````
-
-Text advisory endpoint:
-
-```text
-http://127.0.0.1:8000/advisory
-```
-
-Note: `/advisory` is a POST endpoint used by the website form. To use the website normally, open:
 
 ```text
 http://127.0.0.1:8000
