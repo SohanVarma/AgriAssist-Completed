@@ -417,17 +417,6 @@ pip install -r requirements.txt
 uvicorn web_app:app --host 0.0.0.0 --port $PORT
 ```
 
-### Environment Variable
-
-Add this environment variable in Render:
-
-```text
-OPENAI_API_KEY = your_openai_api_key_here
-```
-
-Do not upload `.env` to GitHub.
-
----
 
 ## Safety Disclaimer
 
