@@ -6,17 +6,9 @@
 
 # AgriAssist
 
-## Website Name
-
-**AgriAssist: AI Agricultural Advisory Website**
-
 ## Local Website Links
 
 Run the website locally using FastAPI:
-
-```text
-http://127.0.0.1:8000
-````
 
 ```text
 http://127.0.0.1:8000
