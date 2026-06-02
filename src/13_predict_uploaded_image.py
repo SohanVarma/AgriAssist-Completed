@@ -1,11 +1,15 @@
 from pathlib import Path
+
 import torch
 from torch import nn
 from torchvision import transforms
 from PIL import Image
 
-RESULTS_DIR = Path("results")
-MODEL_PATH = RESULTS_DIR / "initial_model.pt"
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+RESULTS_MODEL_PATH = BASE_DIR / "results" / "initial_model.pt"
+MODELS_MODEL_PATH = BASE_DIR / "models" / "cnn_crop_disease_model.pt"
 
 IMAGE_SIZE = 128
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -50,39 +54,62 @@ class ImprovedCNN(nn.Module):
         return self.classifier(x)
 
 
-def load_model():
-    if not MODEL_PATH.exists():
-        raise FileNotFoundError(
-            "Model file not found. Train first using: python3 src/03_train_initial_model.py"
-        )
+def get_model_path() -> Path:
+    if RESULTS_MODEL_PATH.exists():
+        return RESULTS_MODEL_PATH
 
-    checkpoint = torch.load(MODEL_PATH, map_location=DEVICE)
+    if MODELS_MODEL_PATH.exists():
+        return MODELS_MODEL_PATH
+
+    raise FileNotFoundError(
+        "Model file not found. Expected one of:\n"
+        f"{RESULTS_MODEL_PATH}\n"
+        f"{MODELS_MODEL_PATH}\n"
+        "Train first using: python3 src/03_train_initial_model.py"
+    )
+
+
+def load_model():
+    model_path = get_model_path()
+
+    checkpoint = torch.load(
+        model_path,
+        map_location=DEVICE,
+        weights_only=False
+    )
 
     label_to_idx = checkpoint["label_to_idx"]
     idx_to_label = {v: k for k, v in label_to_idx.items()}
+
+    image_size = checkpoint.get("image_size", IMAGE_SIZE)
 
     model = ImprovedCNN(len(label_to_idx)).to(DEVICE)
     model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
 
-    return model, idx_to_label
+    return model, idx_to_label, image_size
 
 
-def predict_image(image_path):
+def preprocess_image(image_path, image_size=IMAGE_SIZE):
     image_path = Path(image_path)
 
     if not image_path.exists():
         raise FileNotFoundError(f"Image not found: {image_path}")
 
     transform = transforms.Compose([
-        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.Resize((image_size, image_size)),
         transforms.ToTensor()
     ])
 
     image = Image.open(image_path).convert("RGB")
     image_tensor = transform(image).unsqueeze(0).to(DEVICE)
 
-    model, idx_to_label = load_model()
+    return image, image_tensor
+
+
+def predict_image(image_path):
+    model, idx_to_label, image_size = load_model()
+    _, image_tensor = preprocess_image(image_path, image_size)
 
     with torch.no_grad():
         logits = model(image_tensor)
@@ -105,7 +132,7 @@ def main():
 
     print("\nPrediction Result")
     print("=================")
-    print(f"Predicted Disease: {prediction}")
+    print(f"Predicted Disease/Class: {prediction}")
     print(f"Confidence: {confidence:.2f}%")
 
 

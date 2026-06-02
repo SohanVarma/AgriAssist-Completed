@@ -25,7 +25,7 @@ MODELS_DIR.mkdir(exist_ok=True)
 
 IMAGE_SIZE = 128
 BATCH_SIZE = 32
-EPOCHS = 50
+EPOCHS = 500
 LEARNING_RATE = 1e-3
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

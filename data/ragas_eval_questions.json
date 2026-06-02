@@ -1,0 +1,62 @@
+[
+  {
+    "question": "tomato leaf curl whitefly management",
+    "ground_truth": "Tomato leaf curl symptoms are commonly associated with curling, yellowing, and distorted leaves, and whiteflies are often involved in spreading leaf curl problems. The farmer should inspect the underside of leaves for whiteflies, eggs, sticky residue, and symptom spread. Immediate steps include removing severely affected plant material where appropriate, improving field sanitation, using monitoring traps, avoiding excessive pesticide use, and consulting a local agricultural officer before selecting any pesticide or treatment."
+  },
+  {
+    "question": "brinjal equipment problem",
+    "ground_truth": "For brinjal equipment problems, the farmer should first inspect all equipment used in cultivation, especially sprayers, pumps, drip lines, filters, pipes, nozzles, valves, and pressure systems. The issue may be due to blockage, leakage, broken parts, poor calibration, or uneven flow. The farmer should clean filters and nozzles, check pump pressure, repair damaged parts, and consult a technician or agricultural officer before replacing equipment or applying treatment."
+  },
+  {
+    "question": "wheat disease treatment",
+    "ground_truth": "For wheat disease concerns, the farmer should inspect leaves, stems, and spikes for symptoms such as rust-colored spots, yellowing, wilting, lesions, or fungal growth. The farmer should check whether symptoms are spreading across the field, improve sanitation, avoid excess moisture on leaves, maintain proper spacing, and consult local agricultural experts before applying fungicides or other treatments. Exact disease confirmation requires field inspection."
+  },
+  {
+    "question": "paddy pest management",
+    "ground_truth": "For paddy pest management, the farmer should inspect the crop for insects, eggs, larvae, leaf folders, stem damage, holes, discoloration, and field-level spread. Integrated Pest Management should be followed, including regular monitoring, field sanitation, water management, use of traps where suitable, and conservation of beneficial insects. Chemical treatment should only be considered after pest confirmation and expert verification."
+  },
+  {
+    "question": "irrigation problem in crop field",
+    "ground_truth": "For irrigation problems, the farmer should check soil moisture, drainage, pump operation, pipe leakage, drip emitter clogging, water pressure, water distribution, and signs of overwatering or water stress. The farmer should repair leaks, clean filters, check valves, avoid both excess irrigation and drought stress, and monitor crop response after irrigation changes. Local irrigation guidance should be followed."
+  },
+  {
+    "question": "tomato bacterial spot management",
+    "ground_truth": "For tomato bacterial spot, the farmer should inspect leaves, stems, and fruits for small dark spots, water-soaked lesions, yellow halos, and spreading symptoms. Management should focus on sanitation, avoiding overhead irrigation, removing severely affected plant material where appropriate, improving airflow, using disease-free seedlings, rotating crops, and consulting agricultural experts before using any recommended treatment. Wet conditions can increase disease spread."
+  },
+  {
+    "question": "potato early blight treatment",
+    "ground_truth": "For potato early blight, the farmer should inspect older leaves for brown concentric ring spots, yellowing, and progressive leaf drying. Management includes removing infected debris, avoiding excessive leaf wetness, improving field sanitation, maintaining balanced nutrition, rotating crops, monitoring disease spread, and consulting local experts before fungicide use. Early detection and regular monitoring are important to reduce yield loss."
+  },
+  {
+    "question": "pepper bell bacterial spot prevention",
+    "ground_truth": "For pepper bell bacterial spot prevention, farmers should use clean seeds or healthy seedlings, avoid working in wet fields, reduce overhead irrigation, remove infected debris, improve airflow, rotate crops, and regularly inspect leaves and fruits for small spots or lesions. Any treatment decision should be verified locally because bacterial diseases require careful diagnosis and region-specific management."
+  },
+  {
+    "question": "tomato septoria leaf spot management",
+    "ground_truth": "For tomato septoria leaf spot, farmers should inspect lower leaves for small circular spots with gray or tan centers and darker borders. Management includes removing infected lower leaves when appropriate, improving air circulation, avoiding leaf wetness, mulching to reduce soil splash, rotating crops, cleaning tools, and consulting agricultural experts before applying fungicides. Regular monitoring helps prevent spread to upper leaves."
+  },
+  {
+    "question": "tomato spider mite control",
+    "ground_truth": "For tomato spider mite control, farmers should inspect leaf undersides for tiny mites, fine webbing, yellow speckling, bronzing, and dry leaves. Management includes regular monitoring, reducing dusty conditions, maintaining plant health, avoiding unnecessary broad-spectrum pesticides that may kill natural enemies, and consulting experts for suitable control methods. Severe infestations require local expert confirmation before treatment."
+  },
+  {
+    "question": "crop nutrient deficiency yellow leaves",
+    "ground_truth": "Yellow leaves may be caused by nutrient deficiency, water stress, disease, pests, or soil problems. The farmer should observe whether yellowing starts on older or younger leaves, check soil moisture, inspect roots, review fertilizer history, and consider soil testing. Random fertilizer application should be avoided. Balanced nutrition and local soil test recommendations should guide any fertilizer decision."
+  },
+  {
+    "question": "fungal disease in vegetable crop",
+    "ground_truth": "For suspected fungal disease in vegetable crops, the farmer should inspect for spots, powdery growth, wilting, rotting, lesions, and spread during humid or wet conditions. Management includes improving field sanitation, removing infected debris where suitable, increasing spacing and airflow, avoiding excessive leaf wetness, using clean tools, rotating crops, and consulting local experts before fungicide application."
+  },
+  {
+    "question": "neem oil for crop pest problem",
+    "ground_truth": "Neem oil is commonly used as a botanical pest management option for some soft-bodied insects, but it should not be used blindly. The farmer should first identify the pest, inspect crop stage and weather, follow label guidance, avoid application during extreme heat or strong sunlight, and consult a local agricultural expert for suitability. Neem oil may be part of an Integrated Pest Management approach."
+  },
+  {
+    "question": "drip irrigation blockage problem",
+    "ground_truth": "For drip irrigation blockage, the farmer should inspect filters, emitters, pipes, valves, pressure, and water quality. Common causes include dirt, algae, mineral deposits, poor filtration, or damaged lines. The farmer should clean filters, flush lateral lines, check pressure uniformity, repair leaks, and consult an irrigation technician if blockage continues. Uneven water delivery can cause crop stress."
+  },
+  {
+    "question": "crop disease after heavy rain",
+    "ground_truth": "After heavy rain, crops may face increased risk of fungal or bacterial diseases due to high humidity, standing water, and leaf wetness. The farmer should check drainage, remove stagnant water where possible, inspect leaves and stems for new spots or rotting, avoid entering wet fields unnecessarily, improve airflow, and monitor symptoms over the next few days. Treatment should be based on confirmed symptoms and local expert advice."
+  }
+]

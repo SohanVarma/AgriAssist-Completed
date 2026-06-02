@@ -35,8 +35,8 @@
             <h2>Multimodal agricultural intelligence in one system</h2>
             <p>
                 AgriAssist combines crop disease image classification, retrieval-augmented
-                generation, explainable AI, and OpenAI-powered advisory generation to support
-                farmers with safer and more evidence-based recommendations.
+                generation, explainable AI, backbone comparison, and OpenAI-powered advisory
+                generation to support farmers with safer and more evidence-based recommendations.
             </p>
         </section>
 
@@ -78,6 +78,17 @@
                         <li>Transparent prediction support</li>
                     </ul>
                 </div>
+
+                <!-- <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Backbone Comparison</h3>
+                    <ul>
+                        <li>ResNet18 comparison</li>
+                        <li>Vision Transformer comparison</li>
+                        <li>Deployment suitability analysis</li>
+                        <li>Architecture trade-off report</li>
+                    </ul>
+                </div> -->
             </div>
         </section>
 
@@ -129,6 +140,15 @@
                         value="{{ query }}"
                         placeholder="Example: tomato leaf curl whitefly management"
                     >
+
+                    <label>Top-k retrieved documents</label>
+                    <select name="top_k">
+                        <option value="3">3 documents</option>
+                        <option value="5" selected>5 documents</option>
+                        <option value="8">8 documents</option>
+                        <option value="10">10 documents</option>
+                    </select>
+
                     <button type="submit">Generate Text Advisory</button>
                 </form>
             </div>
@@ -149,9 +169,50 @@
                         accept="image/*"
                         required
                     >
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" name="generate_advisory" value="yes" checked>
+                        Generate advisory after prediction
+                    </label>
+
                     <button type="submit">Predict and Generate Advisory</button>
                 </form>
             </div>
+        </section>
+
+        <section class="input-grid">
+            <div class="panel explain-panel">
+                <span class="panel-number">03</span>
+                <h3>Grad-CAM Explainability</h3>
+                <p>
+                    Upload a leaf or crop image to generate a Grad-CAM heatmap that shows
+                    the visual regions influencing the CNN prediction.
+                </p>
+
+                <form action="/gradcam" method="post" enctype="multipart/form-data">
+                    <label>Upload image for Grad-CAM</label>
+                    <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        required
+                    >
+                    <button type="submit">Generate Grad-CAM Heatmap</button>
+                </form>
+            </div>
+
+            <!-- <div class="panel explain-panel">
+                <span class="panel-number">04</span>
+                <h3>Backbone Comparison</h3>
+                <p>
+                    Compare ResNet18 and Vision Transformer style backbones for crop disease
+                    classification, deployment suitability, and explainability compatibility.
+                </p>
+
+                <form action="/backbone-comparison" method="post">
+                    <button type="submit">Run Backbone Comparison</button>
+                </form>
+            </div> -->
         </section>
 
         {% if error %}
@@ -164,6 +225,12 @@
             <section class="result-card prediction">
                 <p class="eyebrow dark">Image Prediction</p>
                 <h2>Prediction Result</h2>
+
+                {% if prediction.image_url %}
+                    <div class="image-preview">
+                        <img src="{{ prediction.image_url }}" alt="Uploaded crop image">
+                    </div>
+                {% endif %}
 
                 <div class="info-grid">
                     <div>
@@ -184,6 +251,55 @@
             </section>
         {% endif %}
 
+        {% if gradcam %}
+            <section class="result-card prediction">
+                <p class="eyebrow dark">Explainable AI</p>
+                <h2>Grad-CAM Heatmap Result</h2>
+
+                <div class="info-grid">
+                    <div>
+                        <span>Uploaded Image</span>
+                        <strong>{{ gradcam.image_name }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Predicted Disease/Class</span>
+                        <strong>{{ gradcam.label }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Confidence</span>
+                        <strong>{{ "%.2f"|format(gradcam.confidence) }}%</strong>
+                    </div>
+                </div>
+
+                <div class="gradcam-grid">
+                    <div>
+                        <h3>Original Image</h3>
+                        <img src="{{ gradcam.image_url }}" alt="Original uploaded image">
+                    </div>
+
+                    <div>
+                        <h3>Grad-CAM Heatmap</h3>
+                        <img src="{{ gradcam.gradcam_url }}" alt="Grad-CAM heatmap">
+                    </div>
+                </div>
+
+                <div class="explanation-box">
+                    <h3>Visual Disease Region Explanation</h3>
+                    <p>{{ gradcam.explanation }}</p>
+                </div>
+            </section>
+        {% endif %}
+
+        <!-- {% if backbone %}
+            <section class="result-card">
+                <p class="eyebrow dark">Backbone Comparison</p>
+                <h2>ResNet18 vs Vision Transformer</h2>
+                <pre>{{ backbone.markdown }}</pre>
+            </section>
+        {% endif %} -->
+
         {% if result %}
             <section class="result-card">
                 <p class="eyebrow dark">Retrieval Query</p>
@@ -202,8 +318,8 @@
                                 <span>Document {{ loop.index }}</span>
                                 <small>
                                     Score: {{ "%.3f"|format(item.score) }} |
-                                    Crop: {{ item.document.crop }} |
-                                    Problem: {{ item.document.problem_type }}
+                                    TF-IDF: {{ "%.3f"|format(item.tfidf_score) }} |
+                                    Keyword Overlap: {{ item.keyword_overlap }}
                                 </small>
                             </summary>
 
